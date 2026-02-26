@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 1, "column": 0}, "map": {"version":3,"sources":["turbopack://[project]/src/app/components/Login/index.scss.css"],"sourcesContent":[".loginPage{min-height:100vh;display:flex;align-items:center;justify-content:center}.loginPage form{display:flex;align-items:flex-start;flex-direction:column;gap:16px}.loginPage label{display:flex;flex-direction:column;gap:4px}.loginPage input{padding:8px 16px;width:300px}.loginPage button{margin-top:4px;padding:8px 20px}"],"names":[],"mappings":"AAAA;;;;;;;AAAmF;;;;;;;AAAmF;;;;;;AAA4D;;;;;AAA8C"}},
+    {"offset": {"line": 30, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"A"}}]
+}

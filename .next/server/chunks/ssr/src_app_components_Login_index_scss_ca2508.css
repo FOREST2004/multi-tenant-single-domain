@@ -1,0 +1,33 @@
+/* [project]/src/app/components/Login/index.scss.css [app-ssr] (css) */
+.loginPage {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loginPage form {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.loginPage label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.loginPage input {
+  padding: 8px 16px;
+  width: 300px;
+}
+
+.loginPage button {
+  margin-top: 4px;
+  padding: 8px 20px;
+}
+
+
+/*# sourceMappingURL=src_app_components_Login_index_scss_ca2508.css.map*/

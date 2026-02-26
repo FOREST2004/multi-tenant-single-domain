@@ -41,10 +41,10 @@ export interface UserAuthOperations {
  * via the `definition` "pages".
  */
 export interface Page {
-  id: string;
+  id: number;
   title?: string | null;
   slug?: string | null;
-  tenant: string | Tenant;
+  tenant: number | Tenant;
   updatedAt: string;
   createdAt: string;
 }
@@ -53,7 +53,7 @@ export interface Page {
  * via the `definition` "tenants".
  */
 export interface Tenant {
-  id: string;
+  id: number;
   name: string;
   slug: string;
   public?: boolean | null;
@@ -65,11 +65,11 @@ export interface Tenant {
  * via the `definition` "users".
  */
 export interface User {
-  id: string;
+  id: number;
   roles?: ('super-admin' | 'user')[] | null;
   tenants?:
     | {
-        tenant?: (string | null) | Tenant;
+        tenant?: (number | null) | Tenant;
         roles?: ('super-admin' | 'viewer')[] | null;
         id?: string | null;
       }[]
@@ -91,10 +91,10 @@ export interface User {
  * via the `definition` "payload-preferences".
  */
 export interface PayloadPreference {
-  id: string;
+  id: number;
   user: {
     relationTo: 'users';
-    value: string | User;
+    value: number | User;
   };
   key?: string | null;
   value?:
@@ -114,7 +114,7 @@ export interface PayloadPreference {
  * via the `definition` "payload-migrations".
  */
 export interface PayloadMigration {
-  id: string;
+  id: number;
   name?: string | null;
   batch?: number | null;
   updatedAt: string;

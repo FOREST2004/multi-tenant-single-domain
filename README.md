@@ -1,75 +1,66 @@
-# Payload Multi-Tenant Example
+# Payload Multi-Tenant Example (Single Domain)
 
-This example demonstrates how to achieve a multi-tenancy in [Payload](https://github.com/payloadcms/payload) on a single domain. Tenants are separated by a `Tenants` collection.
+Dự án này minh họa cách xây dựng ứng dụng **multi-tenancy** với [Payload CMS](https://github.com/payloadcms/payload) trên **một domain duy nhất**. Các tenant được phân tách qua collection `Tenants`.
 
-## Quick Start
+## Khởi động nhanh
 
-To spin up this example locally, follow these steps:
+1. Clone repo về máy
+2. `cp .env.example .env` — tạo file biến môi trường
+3. Cập nhật `.env` với thông tin database PostgreSQL của bạn
+4. `yarn install` — cài dependencies
+5. `yarn dev` — khởi động ứng dụng
+6. `yarn seed` — tạo dữ liệu mẫu
+7. Mở `http://localhost:3000/admin` — vào trang quản trị
+8. Đăng nhập bằng email `demo@payloadcms.com` và mật khẩu `demo`
 
-1. First clone the repo
-2. `cd YOUR_PROJECT_REPO && cp .env.example .env`
-3. `pnpm i && pnpm dev`
-4. run `yarn seed` to seed the database
-5. open `http://localhost:3000/admin` to access the admin panel
-6. Login with email `demo@payloadcms.com` and password `demo`
+## Cách hoạt động
 
-## How it works
+Ứng dụng Payload multi-tenant là một server duy nhất phục vụ nhiều "tenant". Ví dụ về tenant có thể là: khách hàng của agency, các tổ chức trong tập đoàn, hoặc khách hàng SaaS của bạn.
 
-A multi-tenant Payload application is a single server that hosts multiple "tenants". Examples of tenants may be your agency's clients, your business conglomerate's organizations, or your SaaS customers.
+Mỗi tenant có bộ dữ liệu riêng (users, pages...) được giới hạn trong phạm vi tenant đó. Ứng dụng được chia sẻ chung hạ tầng nhưng dữ liệu hoàn toàn tách biệt giữa các tenant.
 
-Each tenant has its own set of users, pages, and other data that is scoped to that tenant. This means that your application will be shared across tenants but the data will be scoped to each tenant.
-
-### Collections
-
-See the [Collections](https://payloadcms.com/docs/configuration/collections) docs for details on how to extend any of this functionality.
+### Các Collections
 
 - #### Users
 
-  The `users` collection is auth-enabled and encompass both app-wide and tenant-scoped users based on the value of their `roles` and `tenants` fields. Users with the role `super-admin` can manage your entire application, while users with the _tenant role_ of `admin` have limited access to the platform and can manage only the tenant(s) they are assigned to, see [Tenants](#tenants) for more details.
-
-  For additional help with authentication, see the official [Auth Example](https://github.com/payloadcms/payload/tree/main/examples/auth/cms#readme) or the [Authentication](https://payloadcms.com/docs/authentication/overview#authentication-overview) docs.
+  Collection `users` được bật xác thực, bao gồm cả người dùng toàn hệ thống và người dùng theo tenant, dựa trên giá trị của các field `roles` và `tenants`. Người dùng có role `super-admin` có thể quản lý toàn bộ ứng dụng, trong khi người dùng có tenant role `admin` chỉ có quyền truy cập hạn chế vào tenant được gán.
 
 - #### Tenants
 
-  A `tenants` collection is used to achieve tenant-based access control. Each user is assigned an array of `tenants` which includes a relationship to a `tenant` and their `roles` within that tenant. You can then scope any document within your application to any of your tenants using a simple [relationship](https://payloadcms.com/docs/fields/relationship) field on the `users` or `pages` collections, or any other collection that your application needs. The value of this field is used to filter documents in the admin panel and API to ensure that users can only access documents that belong to their tenant and are within their role. See [Access Control](#access-control) for more details.
-
-  For more details on how to extend this functionality, see the [Payload Access Control](https://payloadcms.com/docs/access-control/overview) docs.
+  Collection `tenants` được dùng để kiểm soát truy cập theo tenant. Mỗi user được gán một mảng `tenants` gồm quan hệ tới một `tenant` và `roles` của họ trong tenant đó. Bạn có thể gắn bất kỳ document nào vào tenant thông qua field [relationship](https://payloadcms.com/docs/fields/relationship). Giá trị này được dùng để lọc dữ liệu trong admin panel và API.
 
 - #### Pages
 
-  Each page is assigned a `tenant` which is used to control access and scope API requests. Pages that are created by tenants are automatically assigned that tenant based on that user's `lastLoggedInTenant` field.
+  Mỗi page được gán một `tenant` để kiểm soát truy cập và lọc API. Các page được tạo bởi tenant admin sẽ tự động được gán tenant dựa trên field `lastLoggedInTenant` của người dùng đó.
 
-## Access control
+## Kiểm soát truy cập (Access Control)
 
-Basic role-based access control is setup to determine what users can and cannot do based on their roles, which are:
+Hệ thống phân quyền cơ bản dựa trên roles:
 
-- `super-admin`: They can access the Payload admin panel to manage your multi-tenant application. They can see all tenants and make all operations.
-- `user`: They can only access the Payload admin panel if they are a tenant-admin, in which case they have a limited access to operations based on their tenant (see below).
+- `super-admin`: Truy cập toàn bộ admin panel, xem tất cả tenant và thực hiện mọi thao tác.
+- `user`: Chỉ truy cập được admin panel nếu là tenant-admin, với quyền hạn giới hạn trong tenant của họ.
 
-This applies to each collection in the following ways:
+Áp dụng cho từng collection:
 
-- `users`: Only super-admins, tenant-admins, and the user themselves can access their profile. Anyone can create a user, but only these admins can delete users. See [Users](#users) for more details.
-- `tenants`: Only super-admins and tenant-admins can read, create, update, or delete tenants. See [Tenants](#tenants) for more details.
-- `pages`: Everyone can access pages, but only super-admins and tenant-admins can create, update, or delete them.
+- `users`: Chỉ super-admin, tenant-admin và chính người dùng đó mới có thể xem/sửa profile. Ai cũng có thể tạo user, nhưng chỉ admin mới xóa được.
+- `tenants`: Chỉ super-admin và tenant-admin mới có thể đọc, tạo, sửa, xóa tenant.
+- `pages`: Ai cũng có thể đọc page, nhưng chỉ super-admin và tenant-admin mới tạo, sửa, xóa được.
 
-When a user logs in, a `lastLoggedInTenant` field is saved to their profile. This is done by reading the value of `req.headers.host`, querying for a tenant with a matching `domain`, and verifying that the user is a member of that tenant. This field is then used to automatically assign the tenant to any documents that the user creates, such as pages. Super-admins can also use this field to browse the admin panel as a specific tenant.
-
-> If you have versions and drafts enabled on your pages, you will need to add additional read access control condition to check the user's tenants that prevents them from accessing draft documents of other tenants.
-
-For more details on how to extend this functionality, see the [Payload Access Control](https://payloadcms.com/docs/access-control/overview#access-control) docs.
+Khi user đăng nhập, field `lastLoggedInTenant` sẽ được lưu vào profile. Trường này được dùng để tự động gán tenant cho các document mới. Super-admin cũng có thể dùng field này để duyệt admin panel với tư cách một tenant cụ thể.
 
 ## CORS
 
-This multi-tenant setup requires an open CORS policy. Since each tenant contains a dynamic list of domains, there's no way to know specifically which domains to whitelist at runtime without significant performance implications. This also means that the `serverURL` is not set, as this scopes all requests to a single domain.
+Cấu hình này yêu cầu chính sách CORS mở, vì mỗi tenant có danh sách domain động và không thể whitelist cố định tại runtime. Do đó `serverURL` không được set.
 
-Alternatively, if you know the domains of your tenants ahead of time and these values won't change often, you could simply remove the `domains` field altogether and instead use static values.
+## Frontend
 
-For more details on this, see the [CORS](https://payloadcms.com/docs/production/preventing-abuse#cross-origin-resource-sharing-cors) docs.
+Frontend đã được scaffold sẵn trong dự án này. Xem code render page tại [`/src/app/(app)/[tenant]/[...slug]/page.tsx`](src/app/(app)/[tenant]/[...slug]/page.tsx). Đây là template khởi đầu, bạn có thể tùy chỉnh theo nhu cầu.
 
-## Front-end
+## Tài khoản mẫu (sau khi chạy seed)
 
-The frontend is scaffolded out in this example directory. You can view the code for rendering pages at `/src/app/(app)/[tenant]/[...slug]/page.tsx`. This is a starter template, you may need to adjust the app to better fit your needs.
-
-## Questions
-
-If you have any issues or questions, reach out to us on [Discord](https://discord.com/invite/payload) or start a [GitHub discussion](https://github.com/payloadcms/payload/discussions).
+| Tài khoản | Mật khẩu | Quyền |
+|---|---|---|
+| `demo@payloadcms.com` | `demo` | Super Admin |
+| `tenant1@payloadcms.com` | `test` | Admin của Tenant 1 |
+| `tenant2@payloadcms.com` | `test` | Admin của Tenant 2 |
+| `multi-admin@payloadcms.com` | `test` | Admin của Tenant 1 & 2 |

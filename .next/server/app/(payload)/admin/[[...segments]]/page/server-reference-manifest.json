@@ -1,0 +1,13 @@
+{
+  "node": {
+    "f6b807fa88381a4ed7facc141bf226eb093db646": {
+      "workers": {
+        "app/(payload)/admin/[[...segments]]/page": "[project]/.next-internal/server/app/(payload)/admin/[[...segments]]/page/actions.js { ACTIONS_MODULE0 => \"[project]/node_modules/@payloadcms/next/dist/layouts/Root/index.js [app-rsc] (ecmascript)\" } [app-rsc] (ecmascript)"
+      },
+      "layer": {
+        "app/(payload)/admin/[[...segments]]/page": "rsc"
+      }
+    }
+  },
+  "edge": {}
+}

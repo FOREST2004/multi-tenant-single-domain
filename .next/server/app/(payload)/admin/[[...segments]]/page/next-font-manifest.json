@@ -1,0 +1,11 @@
+{
+  "pages": {},
+  "app": {
+    "[project]/src/app/(payload)/admin/[[...segments]]/page": [
+      "static/media/u_4c0qyriQwlOrhSvowK_l5_eTxCVx0ZbwLvKH2Gk9hLmp0v5yA_xXPqCzLvF_udrHOg7iA-s.p.906c36b7.woff2",
+      "static/media/u_4e0qyriQwlOrhSvowK_l5UcA6zuSYEqOzpPe3HOZJ5eX1WtLaQwmYiSeqqJ_mXq1Gi-s.p.65e5f09f.woff2"
+    ]
+  },
+  "appUsingSizeAdjust": true,
+  "pagesUsingSizeAdjust": false
+}

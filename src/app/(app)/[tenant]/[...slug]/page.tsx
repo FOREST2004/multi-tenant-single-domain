@@ -8,6 +8,9 @@ import { getPayloadHMR } from '@payloadcms/next/utilities'
 import configPromise from '@payload-config'
 
 export default async function Page({ params }: { params: { tenant: string; slug?: string[] } }) {
+
+  console.log('params:::: ', params)
+
   const headers = getHeaders()
   const payload = await getPayloadHMR({ config: configPromise })
   const { user } = await payload.auth({ headers })

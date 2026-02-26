@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 5, "column": 0}, "map": {"version":3,"sources":["turbopack://[project]/node_modules/@payloadcms/richtext-lexical/src/features/migrations/slateToLexical/nodes/unknownConvertedNode/Component.tsx"],"sourcesContent":["import React from 'react'\n\nimport type { UnknownConvertedNodeData } from './index.js'\n\ntype Props = {\n  data: UnknownConvertedNodeData\n}\n\nexport const UnknownConvertedNodeComponent: React.FC<Props> = (props) => {\n  const { data } = props\n\n  return (\n    <div>\n      Unknown converted Slate node: <strong>{data?.nodeType}</strong>\n    </div>\n  )\n}\n"],"names":["UnknownConvertedNodeComponent","props","data","jsxs","jsx"],"mappings":";;;;;;AAQO,IAAMA,IAAkDC,CAAAA;IAC7D,IAAM,EAAE,MAAAC,CAAK,EAAA,GAAID;IAEjB,OACEE,CAAAA,GAAAA,iOAAAA,CAAAA,OAAAA,EAAC,OAAA;QAAI,UAAA;YAAA;YAC2BC,CAAAA,GAAAA,iOAAAA,CAAAA,MAAAA,EAAC,UAAA;gBAAQ,UAAAF,GAAM;YAAA;SAAS;IAAA;AAG5D"}},
+    {"offset": {"line": 24, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"A"}}]
+}

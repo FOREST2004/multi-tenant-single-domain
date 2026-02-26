@@ -30,41 +30,32 @@ export const externalUsersLogin: Endpoint = {
       }
     })).docs[0]
 
-    const foundUser = await req.payload.find({
+    if (!fullTenant) {
+      throw new APIError(`Tenant "${tenantSlug}" not found.`, 400, null, true)
+    }
+
+    // Split into 2 queries to avoid duplicate JOIN alias bug in db-postgres beta
+    let foundUser = await req.payload.find({
       collection: 'users',
       where: {
-        or: [
-          {
-            and: [
-              {
-                email: {
-                  equals: username
-                }
-              },
-              {
-                'tenants.tenant': {
-                  equals: fullTenant.id
-                }
-              },
-            ]
-          },
-          {
-            and: [
-              {
-                username: {
-                  equals: username
-                }
-              },
-              {
-                'tenants.tenant': {
-                  equals: fullTenant.id
-                }
-              },
-            ]
-          }
+        and: [
+          { username: { equals: username } },
+          { 'tenants.tenant': { equals: fullTenant.id } },
         ]
       }
     })
+
+    if (foundUser.totalDocs === 0) {
+      foundUser = await req.payload.find({
+        collection: 'users',
+        where: {
+          and: [
+            { email: { equals: username } },
+            { 'tenants.tenant': { equals: fullTenant.id } },
+          ]
+        }
+      })
+    }
 
     if (foundUser.totalDocs > 0) {
       try {
