@@ -1,5 +1,5 @@
 "use client";
-import { useParams, useRouter, useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import React, { FormEvent } from "react";
 import "./index.scss";
 
@@ -12,7 +12,6 @@ export const Login = ({ tenantSlug }: Props) => {
   const usernameRef = React.useRef<HTMLInputElement>(null);
   const passwordRef = React.useRef<HTMLInputElement>(null);
   const router = useRouter();
-  const routeParams = useParams();
   const searchParams = useSearchParams();
 
   const handleSubmit = async (e: FormEvent) => {
@@ -40,7 +39,7 @@ export const Login = ({ tenantSlug }: Props) => {
         router.push(redirectTo);
         return;
       } else {
-        router.push(`/${routeParams.tenant}`);
+        router.push('/');
       }
     } else if (actionRes.status === 400 && json?.errors?.[0]?.message) {
       window.alert(json.errors[0].message);

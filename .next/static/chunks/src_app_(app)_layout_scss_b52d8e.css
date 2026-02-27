@@ -1,0 +1,142 @@
+/* [project]/src/app/(app)/layout.scss.css [app-client] (css) */
+.site {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-family, "Segoe UI", system-ui, sans-serif);
+  color: #1a1a1a;
+}
+
+.site__topbar {
+  background: var(--color-dark, #1a1a2e);
+  color: #ccc;
+  font-size: .8rem;
+  padding: .4rem 2rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.site__header {
+  background: var(--color-primary, #e84118);
+  color: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 12px #0003;
+}
+
+.site__header-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  height: 68px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.site__logo {
+  text-decoration: none;
+  color: #fff;
+}
+
+.site__logo-main {
+  font-size: 1.5rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.site__nav {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.site__nav a {
+  color: #ffffffe6;
+  text-decoration: none;
+  font-size: .9rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .6px;
+  transition: color .2s;
+}
+
+.site__nav a:hover {
+  color: #fff;
+  text-decoration: underline;
+}
+
+.site__nav-login {
+  background: #fff3;
+  border-radius: 20px;
+  border: 1px solid #fff6;
+  padding: .4rem 1.2rem !important;
+  transition: background .2s !important;
+}
+
+.site__nav-login:hover {
+  background: #ffffff59 !important;
+  text-decoration: none !important;
+}
+
+.site__main {
+  flex: 1;
+  background: #f7f8fa;
+}
+
+.site__footer {
+  background: var(--color-dark, #1a1a2e);
+  color: #aaa;
+}
+
+.site__footer-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 3rem 2rem 2rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 2rem;
+}
+
+.site__footer-col h4 {
+  color: #fff;
+  font-size: .9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin: 0 0 .75rem;
+}
+
+.site__footer-col p, .site__footer-col a {
+  font-size: .875rem;
+  line-height: 1.8;
+  margin: 0;
+}
+
+.site__footer-col a {
+  color: #aaa;
+  text-decoration: none;
+  display: block;
+}
+
+.site__footer-col a:hover {
+  color: #fff;
+}
+
+.site__footer-col strong {
+  color: #fff;
+  font-size: 1.1rem;
+  display: block;
+  margin-bottom: .5rem;
+}
+
+.site__footer-bottom {
+  border-top: 1px solid #333;
+  text-align: center;
+  padding: 1rem 2rem;
+  font-size: .8rem;
+  color: #666;
+}
+
+/*# sourceMappingURL=src_app_%28app%29_layout_scss_b52d8e.css.map*/

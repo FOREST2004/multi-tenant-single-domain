@@ -1,0 +1,195 @@
+// Tất cả màu sắc đọc từ CSS variables — được inject từ layout.tsx dựa trên SiteSettings của từng tenant
+
+// ── Hero ────────────────────────────────────────────────────────────────────
+.hero {
+  position: relative;
+  min-height: 480px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--hero-bg, linear-gradient(135deg, #e84118 0%, #ffb347 100%));
+  overflow: hidden;
+  text-align: center;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.08) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.06) 0%, transparent 40%);
+    pointer-events: none;
+  }
+
+  &__overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.15);
+  }
+
+  &__content {
+    position: relative;
+    z-index: 1;
+    color: #fff;
+    max-width: 700px;
+    padding: 3rem 2rem;
+  }
+
+  &__eyebrow {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    opacity: 0.85;
+    margin-bottom: 0.5rem;
+  }
+
+  &__title {
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    font-weight: 900;
+    margin: 0 0 0.75rem;
+    text-shadow: 0 3px 12px rgba(0, 0, 0, 0.25);
+    line-height: 1.1;
+  }
+
+  &__subtitle {
+    font-size: 1.15rem;
+    opacity: 0.9;
+    margin-bottom: 2.5rem;
+    line-height: 1.6;
+  }
+
+  &__actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  &__btn {
+    display: inline-block;
+    padding: 0.85rem 2.2rem;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    text-decoration: none;
+    transition:
+      transform 0.2s,
+      box-shadow 0.2s;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    &--primary {
+      background: #fff;
+      color: var(--color-primary, #e84118);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+    }
+
+    &--secondary {
+      background: transparent;
+      color: #fff;
+      border: 2px solid rgba(255, 255, 255, 0.7);
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.15);
+      }
+    }
+  }
+}
+
+// ── Feature cards ────────────────────────────────────────────────────────────
+.features {
+  padding: 4rem 2rem;
+  background: #f7f8fa;
+
+  &__inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+  }
+
+  &__card {
+    background: #fff;
+    border-radius: var(--card-radius, 16px);
+    padding: 2rem 1.5rem;
+    text-align: center;
+    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.06);
+    border: 1px solid #eee;
+    transition:
+      transform 0.25s,
+      box-shadow 0.25s;
+
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1);
+    }
+
+    h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin: 0.75rem 0 0.5rem;
+      color: #1a1a1a;
+    }
+
+    p {
+      font-size: 0.875rem;
+      color: #666;
+      line-height: 1.6;
+      margin: 0;
+    }
+  }
+
+  &__icon {
+    font-size: 2.5rem;
+    line-height: 1;
+  }
+}
+
+// ── CTA Banner ───────────────────────────────────────────────────────────────
+.cta {
+  background: var(--color-dark, #1a1a2e);
+  color: #fff;
+  padding: 4rem 2rem;
+  text-align: center;
+
+  &__inner {
+    max-width: 600px;
+    margin: 0 auto;
+
+    h2 {
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: 0.75rem;
+    }
+
+    p {
+      color: #bbb;
+      font-size: 1rem;
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+  }
+
+  &__btn {
+    display: inline-block;
+    background: var(--color-primary, #e84118);
+    color: #fff;
+    padding: 0.9rem 2.5rem;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 1rem;
+    text-decoration: none;
+    transition:
+      background 0.2s,
+      transform 0.2s;
+
+    &:hover {
+      background: var(--color-primary-dark, #c0340f);
+      transform: translateY(-2px);
+    }
+  }
+}

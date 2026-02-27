@@ -8,6 +8,8 @@ import Users from './cms/collections/Users'
 import { Tenants } from './cms/collections/Tenants'
 import { TenantSelectorRSC } from './cms/components/TenantSelector/index'
 import { Pages } from './cms/collections/Pages'
+import { Tickets } from './cms/collections/Tickets'
+import { SiteSettings } from './cms/collections/SiteSettings'
 
 import { fileURLToPath } from 'url'
 
@@ -23,7 +25,7 @@ export default buildConfig({
   },
   secret: process.env.PAYLOAD_SECRET as string,
   editor: lexicalEditor({}),
-  collections: [Pages, Users, Tenants],
+  collections: [Pages, Tickets, SiteSettings, Users, Tenants],
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },

@@ -12,6 +12,8 @@ export interface Config {
   };
   collections: {
     pages: Page;
+    tickets: Ticket;
+    'site-settings': SiteSetting;
     users: User;
     tenants: Tenant;
     'payload-preferences': PayloadPreference;
@@ -56,7 +58,66 @@ export interface Tenant {
   id: number;
   name: string;
   slug: string;
+  domain?: string | null;
   public?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tickets".
+ */
+export interface Ticket {
+  id: number;
+  name: string;
+  description?: string | null;
+  price: number;
+  tenant: number | Tenant;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "site-settings".
+ */
+export interface SiteSetting {
+  id: number;
+  tenant: number | Tenant;
+  header?: {
+    enabled?: boolean | null;
+    topBar?: {
+      enabled?: boolean | null;
+      leftText?: string | null;
+      rightText?: string | null;
+    };
+    logoText?: string | null;
+    navLinks?:
+      | {
+          label: string;
+          url: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  theme?: {
+    primaryColor?: string | null;
+    darkColor?: string | null;
+    heroBgFrom?: string | null;
+    heroBgTo?: string | null;
+    cardRadius?: string | null;
+    fontFamily?: ('segoe' | 'inter' | 'roboto' | 'merriweather') | null;
+  };
+  footer?: {
+    enabled?: boolean | null;
+    copyrightText?: string | null;
+    columns?:
+      | {
+          title?: string | null;
+          content?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
   updatedAt: string;
   createdAt: string;
 }

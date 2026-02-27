@@ -29,6 +29,15 @@ export const Tenants: CollectionConfig = {
       index: true,
     },
     {
+      name: 'domain',
+      admin: {
+        description: 'Custom domain for this tenant, example: phuongtrang.com',
+        position: 'sidebar',
+      },
+      type: 'text',
+      index: true,
+    },
+    {
       admin: {
         position: 'sidebar',
         description: 'If checked, logging in is not required.',
