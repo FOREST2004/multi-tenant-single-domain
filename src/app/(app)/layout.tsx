@@ -65,7 +65,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     `© ${new Date().getFullYear()} ${tenantName}. All rights reserved.`
 
   const t = settings?.theme ?? {}
-  const primaryColor = t.primaryColor ?? '#e84118'
+  const primaryColor = t.primaryColor ?? '#8d417fff'
   const darkColor = t.darkColor ?? '#1a1a2e'
   const heroBgFrom = t.heroBgFrom ?? primaryColor
   const heroBgTo = t.heroBgTo ?? '#ffb347'

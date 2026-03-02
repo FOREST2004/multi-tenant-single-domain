@@ -6,8 +6,8 @@ export async function middleware(req: NextRequest) {
   const pathname = req.nextUrl.pathname
 
 
-  console.log('🫑🫑 HOST::::: ', host)
-  console.log('🫑🫑 PATHNAME::::: ', pathname)
+  // console.log('🫑🫑 HOST::::: ', host)
+  // console.log('🫑🫑 PATHNAME::::: ', pathname)
 
   
 
@@ -29,9 +29,12 @@ export async function middleware(req: NextRequest) {
   const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL
   const res = await fetch(
     `${serverUrl}/api/tenants?where[domain][equals]=${host}&limit=1`,
-    { next: { revalidate: 60 } },
+    {
+      headers: { 'x-internal-secret': process.env.INTERNAL_MIDDLEWARE_SECRET ?? '' },
+      next: { revalidate: 60 },
+    },
   )
-  console.log('🫑🫑 RES::::: ', res)
+  // console.log('🫑🫑 RES::::: ', res)
 
   if (!res.ok) {
     return new NextResponse('Server error', { status: 502 })
@@ -39,8 +42,8 @@ export async function middleware(req: NextRequest) {
 
   const json = await res.json()
   const tenant = json?.docs?.[0]
-  console.log('🫑🫑 JSON::::: ', json)
-  console.log('🫑🫑 TENANT::::: ', tenant)
+  // console.log('🫑🫑 JSON::::: ', json)
+  // console.log('🫑🫑 TENANT::::: ', tenant)
 
   // ── BƯỚC 4: Không tìm thấy tenant → trả về 404 ────────────────────────
   if (!tenant) {
@@ -50,7 +53,7 @@ export async function middleware(req: NextRequest) {
   // ── BƯỚC 5: Gắn tenant info vào header → Next.js đọc trong layout/page ──
   const requestHeaders = new Headers(req.headers)
   requestHeaders.set('x-tenant-domain', tenant.domain)
-  // requestHeaders.set('x-tenant-slug', tenant.slug)
+  requestHeaders.set('x-tenant-slug', tenant.slug)
 
   return NextResponse.next({ request: { headers: requestHeaders } })
 }

@@ -5,6 +5,10 @@ import { getTenantAccessIDs } from "../../../utilities/getTenantAccessIDs";
 export const tenantRead: Access = (args) => {
   const req = args.req
 
+  // Internal middleware secret → bypass access control (dùng để tra cứu tenant theo domain)
+  const internalSecret = req.headers.get('x-internal-secret')
+  if (internalSecret && internalSecret === process.env.INTERNAL_MIDDLEWARE_SECRET) return true
+
   // Super admin can read all
   if (isSuperAdmin(args)) return true
 

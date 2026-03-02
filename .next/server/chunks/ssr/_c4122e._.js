@@ -149,6 +149,7 @@ const externalUsersLogin = {
         }
         const fullTenant = (await req.payload.find({
             collection: 'tenants',
+            overrideAccess: true,
             where: {
                 slug: {
                     equals: tenantSlug
@@ -351,6 +352,9 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$cms$2f$utilities$2f$g
 ;
 const tenantRead = (args)=>{
     const req = args.req;
+    // Internal middleware secret → bypass access control (dùng để tra cứu tenant theo domain)
+    const internalSecret = req.headers.get('x-internal-secret');
+    if (internalSecret && internalSecret === process.env.INTERNAL_MIDDLEWARE_SECRET) return true;
     // Super admin can read all
     if ((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$cms$2f$access$2f$isSuperAdmin$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["isSuperAdmin"])(args)) return true;
     const tenantIDs = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$cms$2f$utilities$2f$getTenantAccessIDs$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["getTenantAccessIDs"])(req.user);
@@ -1278,7 +1282,7 @@ async function RootLayout({ children }) {
     const footerColumns = settings?.footer?.columns ?? [];
     const copyrightText = settings?.footer?.copyrightText ?? `© ${new Date().getFullYear()} ${tenantName}. All rights reserved.`;
     const t = settings?.theme ?? {};
-    const primaryColor = t.primaryColor ?? '#e84118';
+    const primaryColor = t.primaryColor ?? '#8d417fff';
     const darkColor = t.darkColor ?? '#1a1a2e';
     const heroBgFrom = t.heroBgFrom ?? primaryColor;
     const heroBgTo = t.heroBgTo ?? '#ffb347';

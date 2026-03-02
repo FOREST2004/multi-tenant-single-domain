@@ -1,1 +1,1 @@
-self.__NEXT_FONT_MANIFEST="{\n  \"app\": {\n    \"[project]/src/app/(payload)/admin/[[...segments]]/page\": [\n      \"static/media/u_4c0qyriQwlOrhSvowK_l5_eTxCVx0ZbwLvKH2Gk9hLmp0v5yA_xXPqCzLvF_udrHOg7iA-s.p.906c36b7.woff2\",\n      \"static/media/u_4e0qyriQwlOrhSvowK_l5UcA6zuSYEqOzpPe3HOZJ5eX1WtLaQwmYiSeqqJ_mXq1Gi-s.p.65e5f09f.woff2\"\n    ]\n  },\n  \"appUsingSizeAdjust\": true,\n  \"pages\": {},\n  \"pagesUsingSizeAdjust\": false\n}"
+self.__NEXT_FONT_MANIFEST="{\n  \"app\": {},\n  \"appUsingSizeAdjust\": false,\n  \"pages\": {},\n  \"pagesUsingSizeAdjust\": false\n}"

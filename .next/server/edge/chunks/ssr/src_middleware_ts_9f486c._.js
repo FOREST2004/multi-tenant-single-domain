@@ -15,8 +15,8 @@ async function middleware(req) {
     const host = (req.headers.get('host') ?? '').replace(/:.*$/, '') // bỏ port: "vinwonders.local:3000" → "vinwonders.local"
     ;
     const pathname = req.nextUrl.pathname;
-    console.log('🫑🫑 HOST::::: ', host);
-    console.log('🫑🫑 PATHNAME::::: ', pathname);
+    // console.log('🫑🫑 HOST::::: ', host)
+    // console.log('🫑🫑 PATHNAME::::: ', pathname)
     // ── BƯỚC 1: Bỏ qua các route không cần xử lý ──────────────────────────
     if (pathname.startsWith('/admin') || pathname.startsWith('/api') || pathname.startsWith('/_next')) {
         return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$esm$2f$server$2f$web$2f$spec$2d$extension$2f$response$2e$js__$5b$middleware$5d$__$28$ecmascript$29$__["NextResponse"].next();
@@ -28,11 +28,14 @@ async function middleware(req) {
     // ── BƯỚC 3: Tra cứu tenant theo domain ────────────────────────────────
     const serverUrl = ("TURBOPACK compile-time value", "http://localhost:3000");
     const res = await fetch(`${serverUrl}/api/tenants?where[domain][equals]=${host}&limit=1`, {
+        headers: {
+            'x-internal-secret': process.env.INTERNAL_MIDDLEWARE_SECRET ?? ''
+        },
         next: {
             revalidate: 60
         }
     });
-    console.log('🫑🫑 RES::::: ', res);
+    // console.log('🫑🫑 RES::::: ', res)
     if (!res.ok) {
         return new __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$esm$2f$server$2f$web$2f$spec$2d$extension$2f$response$2e$js__$5b$middleware$5d$__$28$ecmascript$29$__["NextResponse"]('Server error', {
             status: 502
@@ -40,8 +43,8 @@ async function middleware(req) {
     }
     const json = await res.json();
     const tenant = json?.docs?.[0];
-    console.log('🫑🫑 JSON::::: ', json);
-    console.log('🫑🫑 TENANT::::: ', tenant);
+    // console.log('🫑🫑 JSON::::: ', json)
+    // console.log('🫑🫑 TENANT::::: ', tenant)
     // ── BƯỚC 4: Không tìm thấy tenant → trả về 404 ────────────────────────
     if (!tenant) {
         return new __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$esm$2f$server$2f$web$2f$spec$2d$extension$2f$response$2e$js__$5b$middleware$5d$__$28$ecmascript$29$__["NextResponse"]('Tenant not found', {
@@ -51,7 +54,7 @@ async function middleware(req) {
     // ── BƯỚC 5: Gắn tenant info vào header → Next.js đọc trong layout/page ──
     const requestHeaders = new Headers(req.headers);
     requestHeaders.set('x-tenant-domain', tenant.domain);
-    // requestHeaders.set('x-tenant-slug', tenant.slug)
+    requestHeaders.set('x-tenant-slug', tenant.slug);
     return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$esm$2f$server$2f$web$2f$spec$2d$extension$2f$response$2e$js__$5b$middleware$5d$__$28$ecmascript$29$__["NextResponse"].next({
         request: {
             headers: requestHeaders

@@ -18,7 +18,7 @@ export const Login = ({ tenantSlug }: Props) => {
     e.preventDefault();
     if (!usernameRef?.current?.value || !passwordRef?.current?.value) return;
     const actionRes = await fetch(
-      `${process.env.NEXT_PUBLIC_SERVER_URL}/api/users/external-users/login`,
+      `/api/users/external-users/login`,
       {
         method: "post",
         headers: {

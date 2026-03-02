@@ -23,6 +23,7 @@ export const externalUsersLogin: Endpoint = {
 
     const fullTenant = (await req.payload.find({
       collection: 'tenants',
+      overrideAccess: true,
       where: {
         slug: {
           equals: tenantSlug

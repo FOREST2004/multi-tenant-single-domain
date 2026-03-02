@@ -351,6 +351,9 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$cms$2f$utilities$2f$g
 ;
 const tenantRead = (args)=>{
     const req = args.req;
+    // Internal middleware secret → bypass access control (dùng để tra cứu tenant theo domain)
+    const internalSecret = req.headers.get('x-internal-secret');
+    if (internalSecret && internalSecret === process.env.INTERNAL_MIDDLEWARE_SECRET) return true;
     // Super admin can read all
     if ((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$cms$2f$access$2f$isSuperAdmin$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["isSuperAdmin"])(args)) return true;
     const tenantIDs = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$cms$2f$utilities$2f$getTenantAccessIDs$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["getTenantAccessIDs"])(req.user);
